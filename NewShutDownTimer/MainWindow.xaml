@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NewShutDownTimer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="450">
+        Title="{Binding RemainingTimeUntilShutDown, UpdateSourceTrigger=PropertyChanged}" Height="250" Width="450">
 
     <Window.Style>
         <Style TargetType="Window">
@@ -13,6 +13,10 @@
             <Setter Property="FontSize" Value="13" />
         </Style>
     </Window.Style>
+
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
 
     <Grid>
             
@@ -32,12 +36,12 @@
                 <StackPanel>
                     <StackPanel Grid.Row="0" Orientation="Horizontal">
                         <TextBlock Text="起動してからの時間" Margin="5,0,0,5"/>
-                        <TextBlock Text="0" Margin="5,0,0,5"/>
+                        <TextBlock Text="{Binding ElapsedTimeFromStart, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,5"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
                         <TextBlock Text="シャットダウン時刻" Margin="5,0,0,5"/>
-                        <TextBlock Text="0" Margin="5,0,0,5"/>
+                        <TextBlock Text="{Binding TimeForShutdown}" Margin="5,0,0,5"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
