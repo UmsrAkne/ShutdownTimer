@@ -24,11 +24,18 @@ namespace NewShutDownTimer {
             }
         }
 
+        public String RemainingTimeUntilShutDown {
+            get {
+                return "Remaining " + (timeForShutdown - DateTime.Now).ToString(@"hh\:mm\:ss");
+            }
+        }
+
         public MainWindowViewModel() {
 
             Timer timer = new Timer(1000);
             timer.Elapsed += (object sender, ElapsedEventArgs e) => {
-                RaisePropertyChanged(nameof(ElapsedTimeFromStart)); 
+                RaisePropertyChanged(nameof(ElapsedTimeFromStart));
+                RaisePropertyChanged(nameof(RemainingTimeUntilShutDown));
             };
 
             timer.Start();
