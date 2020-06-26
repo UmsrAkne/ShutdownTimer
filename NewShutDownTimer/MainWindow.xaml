@@ -36,7 +36,7 @@
                 <StackPanel>
                     <StackPanel Grid.Row="0" Orientation="Horizontal">
                         <TextBlock Text="起動してからの時間" Margin="5,0,0,5"/>
-                        <TextBlock Text="{Binding ElapsedTimeFromStart}" Margin="5,0,0,5"/>
+                        <TextBlock Text="{Binding ElapsedTimeFromStart, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,5"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
