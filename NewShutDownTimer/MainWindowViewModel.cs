@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,9 +37,29 @@ namespace NewShutDownTimer {
             timer.Elapsed += (object sender, ElapsedEventArgs e) => {
                 RaisePropertyChanged(nameof(ElapsedTimeFromStart));
                 RaisePropertyChanged(nameof(RemainingTimeUntilShutDown));
+
+                if(timeForShutdown.CompareTo(DateTime.Now) < 0) {
+                    shutdown();
+                    timer.Stop();
+                }
             };
 
             timer.Start();
+        }
+
+        private void shutdown() {
+            // shutdown.exe を実行するコード
+            ProcessStartInfo psi = new ProcessStartInfo();
+            psi.FileName = "shutdown.exe";
+
+            //コマンドラインを指定
+            psi.Arguments = "/s";
+
+            //ウィンドウを表示しないようにする
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = true;
+
+            Process p = Process.Start(psi);
         }
     }
 }
