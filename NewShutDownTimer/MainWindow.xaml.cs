@@ -20,6 +20,11 @@ namespace NewShutDownTimer {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            this.Loaded += this_loaded;
+        }
+
+        private void this_loaded(object sender, RoutedEventArgs e) {
+            ((MainWindowViewModel)DataContext).Window = this;
         }
     }
 }

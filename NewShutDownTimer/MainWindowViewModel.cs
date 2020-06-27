@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 using Prism.Mvvm;
 
 namespace NewShutDownTimer {
     class MainWindowViewModel : BindableBase{
+
+        public Window Window { private get; set; }
 
         private DateTime startUpDate = DateTime.Now;
         public String ElapsedTimeFromStart {
