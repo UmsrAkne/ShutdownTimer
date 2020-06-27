@@ -34,12 +34,21 @@ namespace NewShutDownTimer {
             }
         }
 
+        private Boolean preShutdownNotified = false;
+
         public MainWindowViewModel() {
 
             Timer timer = new Timer(1000);
             timer.Elapsed += (object sender, ElapsedEventArgs e) => {
                 RaisePropertyChanged(nameof(ElapsedTimeFromStart));
                 RaisePropertyChanged(nameof(RemainingTimeUntilShutDown));
+
+                if (!preShutdownNotified) {
+                    if (DateTime.Now.CompareTo(timeForShutdown.AddMinutes(-15)) > 0) {
+                        Window.Dispatcher.Invoke(() => { Window.Activate(); });
+                        preShutdownNotified = true;
+                    }
+                }
 
                 if(timeForShutdown.CompareTo(DateTime.Now) < 0) {
                     shutdown();
