@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
+using Prism.Commands;
 using Prism.Mvvm;
 
 namespace NewShutDownTimer {
@@ -36,6 +38,8 @@ namespace NewShutDownTimer {
 
         private Boolean preShutdownNotified = false;
 
+        public DelegateCommand<object> ChangeRemainingTimeCommand { get; private set; }
+
         public MainWindowViewModel() {
 
             Timer timer = new Timer(1000);
@@ -61,6 +65,21 @@ namespace NewShutDownTimer {
             };
 
             timer.Start();
+
+            ChangeRemainingTimeCommand = new DelegateCommand<object>(
+                (object param) => {
+                    String buttonContent = (String)param;
+                    int sign = 1;
+                    if (buttonContent.IndexOf('-') >= 0) sign = -1;
+                    String numberString = Regex.Replace(buttonContent, @"[^0-9]", "");
+                    int additionMinites = int.Parse(numberString) * sign;
+                    timeForShutdown = timeForShutdown.AddMinutes(additionMinites);
+                    RaisePropertyChanged(nameof(TimeForShutdown));
+
+                },
+                (object param) => { return true; }
+            );
+
         }
 
         private void shutdown() {
