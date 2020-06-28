@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 using Prism.Mvvm;
 
 namespace NewShutDownTimer {
     class MainWindowViewModel : BindableBase{
+
+        public Window Window { private get; set; }
 
         private DateTime startUpDate = DateTime.Now;
         public String ElapsedTimeFromStart {
@@ -31,12 +34,25 @@ namespace NewShutDownTimer {
             }
         }
 
+        private Boolean preShutdownNotified = false;
+
         public MainWindowViewModel() {
 
             Timer timer = new Timer(1000);
             timer.Elapsed += (object sender, ElapsedEventArgs e) => {
                 RaisePropertyChanged(nameof(ElapsedTimeFromStart));
                 RaisePropertyChanged(nameof(RemainingTimeUntilShutDown));
+
+                if (!preShutdownNotified) {
+                    if (DateTime.Now.CompareTo(timeForShutdown.AddMinutes(-15)) > 0) {
+                        preShutdownNotified = true;
+                        Window.Dispatcher.Invoke(() => {
+                            Window.Activate();
+                            MessageBox.Show(Window, "シャットダウンまで残り15分です");
+                            }
+                        );
+                    }
+                }
 
                 if(timeForShutdown.CompareTo(DateTime.Now) < 0) {
                     shutdown();
