@@ -72,8 +72,8 @@ namespace NewShutDownTimer {
                     int sign = 1;
                     if (buttonContent.IndexOf('-') >= 0) sign = -1;
                     String numberString = Regex.Replace(buttonContent, @"[^0-9]", "");
-                    int additionMinites = int.Parse(numberString) * sign;
-                    timeForShutdown = timeForShutdown.AddMinutes(additionMinites);
+                    int additionMinutes = int.Parse(numberString) * sign;
+                    timeForShutdown = timeForShutdown.AddMinutes(additionMinutes);
                     RaisePropertyChanged(nameof(TimeForShutdown));
 
                 },
