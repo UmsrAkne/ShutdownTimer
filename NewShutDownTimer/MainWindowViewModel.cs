@@ -45,8 +45,12 @@ namespace NewShutDownTimer {
 
                 if (!preShutdownNotified) {
                     if (DateTime.Now.CompareTo(timeForShutdown.AddMinutes(-15)) > 0) {
-                        Window.Dispatcher.Invoke(() => { Window.Activate(); });
                         preShutdownNotified = true;
+                        Window.Dispatcher.Invoke(() => {
+                            Window.Activate();
+                            MessageBox.Show(Window, "シャットダウンまで残り15分です");
+                            }
+                        );
                     }
                 }
 
