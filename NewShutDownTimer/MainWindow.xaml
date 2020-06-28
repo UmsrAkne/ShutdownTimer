@@ -61,8 +61,8 @@
             <Button Name="minus5mButton" Content="- 5m" Grid.Row="0"  Margin="2,0,0,2" />
             <Button Name="minus10mButton" Content="- 10m" Grid.Row="1"  Margin="2,0,0,2" />
             <Button Name="minus30mButton"  Content="- 30m" Grid.Row="2"  Margin="2,0,0,2" />
-            <Button Name="minus1hButton"  Content="- 1h" Grid.Row="3"  Margin="2,0,0,2" />
-            <Button Name="minus3hButton" Content="- 3h" Grid.Row="4"  Margin="2,0,0,2" />
+            <Button Name="minus1hButton"  Content="- 60m" Grid.Row="3"  Margin="2,0,0,2" />
+            <Button Name="minus3hButton" Content="- 180m" Grid.Row="4"  Margin="2,0,0,2" />
             
         </Grid>
 
@@ -79,8 +79,8 @@
             <Button Name="plus5mButton" Content="+ 5m" Grid.Row="0"  Margin="2,0,0,2" />
             <Button Name="plus10mButton" Content="+ 10m" Grid.Row="1"  Margin="2,0,0,2" />
             <Button Name="plus30mButton" Content="+ 30m" Grid.Row="2"  Margin="2,0,0,2" />
-            <Button Name="plus1hButton" Content="+ 1h" Grid.Row="3"  Margin="2,0,0,2" />
-            <Button Name="plus3hButton" Content="+ 3h" Grid.Row="4"  Margin="2,0,0,2" />
+            <Button Name="plus1hButton" Content="+ 60m" Grid.Row="3"  Margin="2,0,0,2" />
+            <Button Name="plus3hButton" Content="+ 180m" Grid.Row="4"  Margin="2,0,0,2" />
             
         </Grid>
 
