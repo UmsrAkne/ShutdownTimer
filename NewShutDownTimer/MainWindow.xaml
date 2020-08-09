@@ -22,7 +22,7 @@
             
         <Grid.Resources>
             <Style x:Key="remainingTimeControlButtonStyle" TargetType="Button">
-                <Setter Property="Margin" Value="2,0,0,2"/>
+                <Setter Property="Margin" Value="2,0,2,2"/>
                 <Setter Property="Command"
                         Value="{Binding RelativeSource={RelativeSource AncestorType=Window},Path=DataContext.ChangeRemainingTimeCommand}" />
                 <Setter Property="CommandParameter"
@@ -58,7 +58,10 @@
 
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="1" 
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              >
 
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -67,6 +70,11 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
             <Button Name="minus5mButton"
                     Content="- 5m"
@@ -102,22 +110,15 @@
                     Tag="-180"
                     Style="{StaticResource remainingTimeControlButtonStyle}"
                     />
+
+            <!-- ここまでマイナスボタン -->
+            <!-- ここからプラスボタン -->
             
-        </Grid>
-
-        <Grid Grid.Row="1" Grid.Column="1">
-
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
 
             <Button Name="plus5mButton"
                     Content="+ 5m"
                     Grid.Row="0"
+                    Grid.Column="1"
                     Tag="5"
                     Style="{StaticResource remainingTimeControlButtonStyle}"
                     />
@@ -125,6 +126,7 @@
             <Button Name="plus10mButton"
                     Content="+ 10m"
                     Grid.Row="1"
+                    Grid.Column="1"
                     Tag="10"
                     Style="{StaticResource remainingTimeControlButtonStyle}"
                     />
@@ -132,6 +134,7 @@
             <Button Name="plus30mButton"
                     Content="+ 30m"
                     Grid.Row="2"
+                    Grid.Column="1"
                     Tag="30"
                     Style="{StaticResource remainingTimeControlButtonStyle}"
                     />
@@ -139,6 +142,7 @@
             <Button Name="plus60mButton"
                     Content="+ 60m"
                     Grid.Row="3"
+                    Grid.Column="1"
                     Tag="60"
                     Style="{StaticResource remainingTimeControlButtonStyle}"
                     />
@@ -146,6 +150,7 @@
             <Button Name="plus180mButton"
                     Content="+ 180m"
                     Grid.Row="4"
+                    Grid.Column="1"
                     Tag="180"
                     Style="{StaticResource remainingTimeControlButtonStyle}"
                     />
