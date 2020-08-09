@@ -68,11 +68,8 @@ namespace NewShutDownTimer {
 
             ChangeRemainingTimeCommand = new DelegateCommand<object>(
                 (object param) => {
-                    String buttonContent = (String)param;
-                    int sign = 1;
-                    if (buttonContent.IndexOf('-') >= 0) sign = -1;
-                    String numberString = Regex.Replace(buttonContent, @"[^0-9]", "");
-                    int additionMinutes = int.Parse(numberString) * sign;
+                    String buttonTag = (String)param;
+                    int additionMinutes = int.Parse(buttonTag);
                     timeForShutdown = timeForShutdown.AddMinutes(additionMinutes);
                     RaisePropertyChanged(nameof(TimeForShutdown));
 
