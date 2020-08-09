@@ -76,6 +76,9 @@ namespace NewShutDownTimer {
                     timeForShutdown = timeForShutdown.AddMinutes(additionMinutes);
                     RaisePropertyChanged(nameof(TimeForShutdown));
 
+                    if (timeForShutdown > DateTime.Now.AddMinutes(15)) {
+                        preShutdownNotified = false;
+                    }
                 },
                 (object param) => { return true; }
             );
