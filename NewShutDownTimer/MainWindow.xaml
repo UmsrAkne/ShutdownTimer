@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NewShutDownTimer"
         mc:Ignorable="d"
-        Title="{Binding RemainingTimeUntilShutDown, UpdateSourceTrigger=PropertyChanged}" Height="250" Width="450">
+        Background="#444"
+        Title="{Binding RemainingTimeUntilShutDown, UpdateSourceTrigger=PropertyChanged}" Height="240" Width="350">
 
     <Window.Style>
         <Style TargetType="Window">
@@ -18,15 +19,54 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
 
+    <Window.Resources>
+        <Color x:Key="fc"> #444 </Color>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
             
         <Grid.Resources>
             <Style x:Key="remainingTimeControlButtonStyle" TargetType="Button">
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+
+                            <Border x:Name="border"
+                                    BorderBrush="DarkGray"
+                                    Background="DimGray"
+                                    CornerRadius="6"
+                                    >
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"
+                                                  />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="DarkGray" />
+                                </Trigger>
+
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="Gray" />
+                                </Trigger>
+
+                            </ControlTemplate.Triggers>
+
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
                 <Setter Property="Margin" Value="2,0,2,2"/>
                 <Setter Property="Command"
                         Value="{Binding RelativeSource={RelativeSource AncestorType=Window},Path=DataContext.ChangeRemainingTimeCommand}" />
                 <Setter Property="CommandParameter"
                         Value="{Binding RelativeSource={RelativeSource Self},Path=Tag}"/>
+                <Setter Property="Foreground" Value="WhiteSmoke"/>
             </Style>
         </Grid.Resources>
 
