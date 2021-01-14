@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NewShutDownTimer"
         mc:Ignorable="d"
+        Background="#444"
         Title="{Binding RemainingTimeUntilShutDown, UpdateSourceTrigger=PropertyChanged}" Height="250" Width="450">
 
     <Window.Style>
@@ -18,6 +19,13 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
 
+    <Window.Resources>
+        <Color x:Key="fc"> #444 </Color>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
             
         <Grid.Resources>
@@ -28,9 +36,8 @@
                         <ControlTemplate TargetType="Button">
 
                             <Border x:Name="border"
-                                    BorderThickness="1"
-                                    BorderBrush="LightGray"
-                                    Background="Gray"
+                                    BorderBrush="DarkGray"
+                                    Background="DimGray"
                                     CornerRadius="6"
                                     >
                                 <ContentPresenter VerticalAlignment="Center"
@@ -46,6 +53,7 @@
                         Value="{Binding RelativeSource={RelativeSource AncestorType=Window},Path=DataContext.ChangeRemainingTimeCommand}" />
                 <Setter Property="CommandParameter"
                         Value="{Binding RelativeSource={RelativeSource Self},Path=Tag}"/>
+                <Setter Property="Foreground" Value="WhiteSmoke"/>
             </Style>
         </Grid.Resources>
 
