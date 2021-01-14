@@ -22,6 +22,25 @@
             
         <Grid.Resources>
             <Style x:Key="remainingTimeControlButtonStyle" TargetType="Button">
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+
+                            <Border x:Name="border"
+                                    BorderThickness="1"
+                                    BorderBrush="LightGray"
+                                    Background="Gray"
+                                    CornerRadius="6"
+                                    >
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"
+                                                  />
+                            </Border>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
                 <Setter Property="Margin" Value="2,0,2,2"/>
                 <Setter Property="Command"
                         Value="{Binding RelativeSource={RelativeSource AncestorType=Window},Path=DataContext.ChangeRemainingTimeCommand}" />
