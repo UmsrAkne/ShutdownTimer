@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NewShutDownTimer"
         mc:Ignorable="d"
         Background="#444"
-        Title="{Binding RemainingTimeUntilShutDown, UpdateSourceTrigger=PropertyChanged}" Height="250" Width="450">
+        Title="{Binding RemainingTimeUntilShutDown, UpdateSourceTrigger=PropertyChanged}" Height="240" Width="350">
 
     <Window.Style>
         <Style TargetType="Window">
