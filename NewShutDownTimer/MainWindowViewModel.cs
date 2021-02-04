@@ -32,8 +32,20 @@ namespace NewShutDownTimer {
 
         public String RemainingTimeUntilShutDown {
             get {
-                return "Remaining " + (timeForShutdown - DateTime.Now).ToString(@"hh\:mm\:ss");
+                return (timeForShutdown - DateTime.Now).ToString(@"hh\:mm\:ss") + " " + getRemainingTimeMeter();
             }
+        }
+
+        /// <summary>
+        /// 残り時間を大まかに示すメーター（文字列）を取得します。
+        /// </summary>
+        public String getRemainingTimeMeter(){
+            const int meterUnit = 15;
+            var remainingTime = timeForShutdown - DateTime.Now;
+            int meterLength = (int)remainingTime.TotalMinutes / meterUnit;
+
+            char meterCharacter = '/';
+            return new string(meterCharacter, meterLength);
         }
 
         private Boolean preShutdownNotified = false;
