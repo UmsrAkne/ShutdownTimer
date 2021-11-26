@@ -71,7 +71,7 @@
 
         public string RemainingTimeUntilShutDown
         {
-            get => (timeForShutdown - DateTime.Now).ToString(@"hh\:mm\:ss") + " " + GetRemainingTimeMeter();
+            get => (timeForShutdown - DateTime.Now).ToString(@"hh\:mm\:ss");
         }
 
         public DelegateCommand<object> ChangeRemainingTimeCommand
@@ -104,19 +104,6 @@
         }
 
         public double RemainingTimeRatio => RemainingTimeSpan.TotalSeconds / baseRemainingTimeSpan.TotalSeconds;
-
-        /// <summary>
-        /// 残り時間を大まかに示すメーター（文字列）を取得します。
-        /// </summary>
-        public string GetRemainingTimeMeter()
-        {
-            const int MeterUnit = 15;
-            var remainingTime = timeForShutdown - DateTime.Now;
-            int meterLength = (int)remainingTime.TotalMinutes / MeterUnit;
-
-            char meterCharacter = '/';
-            return new string(meterCharacter, meterLength);
-        }
 
         private void Shutdown()
         {
