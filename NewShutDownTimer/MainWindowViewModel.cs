@@ -17,6 +17,7 @@
         private DateTime startUpDate = DateTime.Now;
         private DateTime timeForShutdown = DateTime.Now.AddHours(3);
         private bool preShutdownNotified = false;
+        private DelegateCommand<object> changeRemainingTimeCommand;
 
         public MainWindowViewModel()
         {
@@ -47,21 +48,6 @@
             };
 
             timer.Start();
-
-            ChangeRemainingTimeCommand = new DelegateCommand<object>(
-                (object param) =>
-                {
-                    string buttonTag = (string)param;
-                    int additionMinutes = int.Parse(buttonTag);
-                    timeForShutdown = timeForShutdown.AddMinutes(additionMinutes);
-                    RaisePropertyChanged(nameof(TimeForShutdown));
-
-                    if (timeForShutdown > DateTime.Now.AddMinutes(15))
-                    {
-                        preShutdownNotified = false;
-                    }
-                },
-                (object param) => { return true; });
         }
 
         public Window Window { private get; set; }
@@ -75,23 +61,28 @@
             }
         }
 
-        public string TimeForShutdown
-        {
-            get
-            {
-                return timeForShutdown.ToString(@"MM/dd HH\:mm\:ss");
-            }
-        }
+        public string TimeForShutdown => timeForShutdown.ToString(@"MM/dd HH\:mm\:ss");
 
         public string RemainingTimeUntilShutDown
         {
-            get
-            {
-                return (timeForShutdown - DateTime.Now).ToString(@"hh\:mm\:ss") + " " + GetRemainingTimeMeter();
-            }
+            get => (timeForShutdown - DateTime.Now).ToString(@"hh\:mm\:ss") + " " + GetRemainingTimeMeter();
         }
 
-        public DelegateCommand<object> ChangeRemainingTimeCommand { get; private set; }
+        public DelegateCommand<object> ChangeRemainingTimeCommand
+        {
+            get => changeRemainingTimeCommand ?? (changeRemainingTimeCommand = new DelegateCommand<object>((param) =>
+            {
+                string buttonTag = (string)param;
+                int additionMinutes = int.Parse(buttonTag);
+                timeForShutdown = timeForShutdown.AddMinutes(additionMinutes);
+                RaisePropertyChanged(nameof(TimeForShutdown));
+
+                if (timeForShutdown > DateTime.Now.AddMinutes(15))
+                {
+                    preShutdownNotified = false;
+                }
+            }));
+        }
 
         /// <summary>
         /// 残り時間を大まかに示すメーター（文字列）を取得します。
