@@ -19,11 +19,17 @@
         private bool preShutdownNotified = false;
         private DelegateCommand<object> changeRemainingTimeCommand;
 
+        private TimeSpan baseRemainingTimeSpan = new TimeSpan(3, 0, 0);
+        private TimeSpan remainingTimeSpan = new TimeSpan(3, 0, 0);
+        private DateTime lastGotDateTime = DateTime.Now;
+
         public MainWindowViewModel()
         {
             Timer timer = new Timer(1000);
             timer.Elapsed += (object sender, ElapsedEventArgs e) =>
             {
+                RemainingTimeSpan -= DateTime.Now - lastGotDateTime;
+                lastGotDateTime = DateTime.Now;
                 RaisePropertyChanged(nameof(ElapsedTimeFromStart));
                 RaisePropertyChanged(nameof(RemainingTimeUntilShutDown));
 
@@ -65,7 +71,7 @@
 
         public string RemainingTimeUntilShutDown
         {
-            get => (timeForShutdown - DateTime.Now).ToString(@"hh\:mm\:ss") + " " + GetRemainingTimeMeter();
+            get => (timeForShutdown - DateTime.Now).ToString(@"hh\:mm\:ss");
         }
 
         public DelegateCommand<object> ChangeRemainingTimeCommand
@@ -77,6 +83,9 @@
                 timeForShutdown = timeForShutdown.AddMinutes(additionMinutes);
                 RaisePropertyChanged(nameof(TimeForShutdown));
 
+                RemainingTimeSpan += new TimeSpan(0, additionMinutes, 0);
+                baseRemainingTimeSpan = remainingTimeSpan;
+
                 if (timeForShutdown > DateTime.Now.AddMinutes(15))
                 {
                     preShutdownNotified = false;
@@ -84,18 +93,17 @@
             }));
         }
 
-        /// <summary>
-        /// 残り時間を大まかに示すメーター（文字列）を取得します。
-        /// </summary>
-        public string GetRemainingTimeMeter()
+        public TimeSpan RemainingTimeSpan
         {
-            const int MeterUnit = 15;
-            var remainingTime = timeForShutdown - DateTime.Now;
-            int meterLength = (int)remainingTime.TotalMinutes / MeterUnit;
-
-            char meterCharacter = '/';
-            return new string(meterCharacter, meterLength);
+            get => remainingTimeSpan;
+            set
+            {
+                SetProperty(ref remainingTimeSpan, value);
+                RaisePropertyChanged(nameof(RemainingTimeRatio));
+            }
         }
+
+        public double RemainingTimeRatio => RemainingTimeSpan.TotalSeconds / baseRemainingTimeSpan.TotalSeconds;
 
         private void Shutdown()
         {
