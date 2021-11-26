@@ -19,11 +19,17 @@
         private bool preShutdownNotified = false;
         private DelegateCommand<object> changeRemainingTimeCommand;
 
+        private TimeSpan baseRemainingTimeSpan = new TimeSpan(3, 0, 0);
+        private TimeSpan remainingTimeSpan = new TimeSpan(3, 0, 0);
+        private DateTime lastGotDateTime = DateTime.Now;
+
         public MainWindowViewModel()
         {
             Timer timer = new Timer(1000);
             timer.Elapsed += (object sender, ElapsedEventArgs e) =>
             {
+                RemainingTimeSpan -= DateTime.Now - lastGotDateTime;
+                lastGotDateTime = DateTime.Now;
                 RaisePropertyChanged(nameof(ElapsedTimeFromStart));
                 RaisePropertyChanged(nameof(RemainingTimeUntilShutDown));
 
@@ -77,12 +83,27 @@
                 timeForShutdown = timeForShutdown.AddMinutes(additionMinutes);
                 RaisePropertyChanged(nameof(TimeForShutdown));
 
+                RemainingTimeSpan += new TimeSpan(0, additionMinutes, 0);
+                baseRemainingTimeSpan = remainingTimeSpan;
+
                 if (timeForShutdown > DateTime.Now.AddMinutes(15))
                 {
                     preShutdownNotified = false;
                 }
             }));
         }
+
+        public TimeSpan RemainingTimeSpan
+        {
+            get => remainingTimeSpan;
+            set
+            {
+                SetProperty(ref remainingTimeSpan, value);
+                RaisePropertyChanged(nameof(RemainingTimeRatio));
+            }
+        }
+
+        public double RemainingTimeRatio => RemainingTimeSpan.TotalSeconds / baseRemainingTimeSpan.TotalSeconds;
 
         /// <summary>
         /// 残り時間を大まかに示すメーター（文字列）を取得します。

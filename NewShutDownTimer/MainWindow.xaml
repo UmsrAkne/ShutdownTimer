@@ -11,6 +11,10 @@
     Background="#444"
     mc:Ignorable="d">
 
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo ProgressState="Normal" ProgressValue="{Binding RemainingTimeRatio}" />
+    </Window.TaskbarItemInfo>
+
     <Window.Style>
         <Style TargetType="Window">
             <Setter Property="FontFamily" Value="Meiryo" />
