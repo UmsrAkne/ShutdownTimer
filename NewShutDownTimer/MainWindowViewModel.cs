@@ -1,12 +1,7 @@
 ﻿namespace NewShutDownTimer
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Threading.Tasks;
     using System.Timers;
     using System.Windows;
     using Prism.Commands;
@@ -107,14 +102,14 @@
 
         private void Shutdown()
         {
-            /// shutdown.exe を実行するコード
+            // shutdown.exe を実行するコード
             ProcessStartInfo psi = new ProcessStartInfo();
             psi.FileName = "shutdown.exe";
 
-            ///コマンドラインを指定
+            // コマンドラインを指定
             psi.Arguments = "/s";
 
-            ///ウィンドウを表示しないようにする
+            // ウィンドウを表示しないようにする
             psi.UseShellExecute = false;
             psi.CreateNoWindow = true;
 
