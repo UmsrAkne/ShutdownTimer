@@ -9,9 +9,9 @@
 
     public class MainWindowViewModel : BindableBase
     {
-        private DateTime startUpDate = DateTime.Now;
+        private readonly DateTime startUpDate = DateTime.Now;
         private DateTime timeForShutdown = DateTime.Now.AddHours(3);
-        private bool preShutdownNotified = false;
+        private bool preShutdownNotified;
         private DelegateCommand<object> changeRemainingTimeCommand;
 
         private TimeSpan baseRemainingTimeSpan = new TimeSpan(3, 0, 0);
@@ -21,7 +21,7 @@
         public MainWindowViewModel()
         {
             Timer timer = new Timer(1000);
-            timer.Elapsed += (object sender, ElapsedEventArgs e) =>
+            timer.Elapsed += (_, e) =>
             {
                 RemainingTimeSpan -= DateTime.Now - lastGotDateTime;
                 lastGotDateTime = DateTime.Now;
@@ -33,11 +33,14 @@
                     if (DateTime.Now.CompareTo(timeForShutdown.AddMinutes(-15)) > 0)
                     {
                         preShutdownNotified = true;
-                        Window.Dispatcher.Invoke(() =>
+                        if (Window != null)
                         {
-                            Window.Activate();
-                            MessageBox.Show(Window, "シャットダウンまで残り15分です");
-                        });
+                            Window.Dispatcher.Invoke(() =>
+                            {
+                                Window.Activate();
+                                MessageBox.Show(Window, "シャットダウンまで残り15分です");
+                            });
+                        }
                     }
                 }
 
@@ -64,14 +67,10 @@
 
         public string TimeForShutdown => timeForShutdown.ToString(@"MM/dd HH\:mm\:ss");
 
-        public string RemainingTimeUntilShutDown
-        {
-            get => (timeForShutdown - DateTime.Now).ToString(@"hh\:mm\:ss");
-        }
+        public string RemainingTimeUntilShutDown => (timeForShutdown - DateTime.Now).ToString(@"hh\:mm\:ss");
 
-        public DelegateCommand<object> ChangeRemainingTimeCommand
-        {
-            get => changeRemainingTimeCommand ?? (changeRemainingTimeCommand = new DelegateCommand<object>((param) =>
+        public DelegateCommand<object> ChangeRemainingTimeCommand =>
+            changeRemainingTimeCommand ?? (changeRemainingTimeCommand = new DelegateCommand<object>((param) =>
             {
                 string buttonTag = (string)param;
                 int additionMinutes = int.Parse(buttonTag);
@@ -86,7 +85,6 @@
                     preShutdownNotified = false;
                 }
             }));
-        }
 
         public TimeSpan RemainingTimeSpan
         {
@@ -103,17 +101,19 @@
         private void Shutdown()
         {
             // shutdown.exe を実行するコード
-            ProcessStartInfo psi = new ProcessStartInfo();
-            psi.FileName = "shutdown.exe";
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = "shutdown.exe",
 
-            // コマンドラインを指定
-            psi.Arguments = "/s";
+                // コマンドラインを指定
+                Arguments = "/s",
 
-            // ウィンドウを表示しないようにする
-            psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
+                // ウィンドウを表示しないようにする
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
 
-            Process p = Process.Start(psi);
+            Process.Start(psi);
         }
     }
 }
