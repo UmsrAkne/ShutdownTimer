@@ -8,6 +8,7 @@
     Title="{Binding RemainingTimeUntilShutDown, UpdateSourceTrigger=PropertyChanged}"
     Width="350"
     Height="240"
+    d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
     Background="#444"
     mc:Ignorable="d">
 
