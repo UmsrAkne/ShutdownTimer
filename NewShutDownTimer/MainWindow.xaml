@@ -28,7 +28,6 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <Color x:Key="fc">#444</Color>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="WhiteSmoke" />
         </Style>
@@ -37,7 +36,7 @@
     <Grid>
 
         <Grid.Resources>
-            <Style x:Key="remainingTimeControlButtonStyle" TargetType="Button">
+            <Style x:Key="RemainingTimeControlButtonStyle" TargetType="Button">
 
                 <Setter Property="Template">
                     <Setter.Value>
@@ -91,12 +90,12 @@
             <Grid>
 
                 <StackPanel>
-                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5,2,0,5" Text="起動してからの時間" />
                         <TextBlock Margin="5,2,0,5" Text="{Binding ElapsedTimeFromStart, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
 
-                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5,0,0,5" Text="シャットダウン時刻" />
                         <TextBlock Margin="5,0,0,5" Text="{Binding TimeForShutdown}" />
                     </StackPanel>
@@ -124,38 +123,42 @@
             </Grid.ColumnDefinitions>
 
             <Button
-                Name="minus5mButton"
+                Name="Minus5MButton"
                 Grid.Row="0"
                 Content="- 5m"
-                Style="{StaticResource remainingTimeControlButtonStyle}"
+                Style="{StaticResource RemainingTimeControlButtonStyle}"
                 Tag="-5" />
 
             <Button
-                Name="minus10mButton"
+                Name="Minus10MButton"
                 Grid.Row="1"
+                Grid.Column="0"
                 Content="- 10m"
-                Style="{StaticResource remainingTimeControlButtonStyle}"
+                Style="{StaticResource RemainingTimeControlButtonStyle}"
                 Tag="-10" />
 
             <Button
-                Name="minus30mButton"
+                Name="Minus30MButton"
                 Grid.Row="2"
+                Grid.Column="0"
                 Content="- 30m"
-                Style="{StaticResource remainingTimeControlButtonStyle}"
+                Style="{StaticResource RemainingTimeControlButtonStyle}"
                 Tag="-30" />
 
             <Button
-                Name="minus60mButton"
+                Name="Minus60MButton"
                 Grid.Row="3"
+                Grid.Column="0"
                 Content="- 60m"
-                Style="{StaticResource remainingTimeControlButtonStyle}"
+                Style="{StaticResource RemainingTimeControlButtonStyle}"
                 Tag="-60" />
 
             <Button
-                Name="minus180mButton"
+                Name="Minus180MButton"
                 Grid.Row="4"
+                Grid.Column="0"
                 Content="- 180m"
-                Style="{StaticResource remainingTimeControlButtonStyle}"
+                Style="{StaticResource RemainingTimeControlButtonStyle}"
                 Tag="-180" />
 
             <!--  ここまでマイナスボタン  -->
@@ -163,43 +166,43 @@
 
 
             <Button
-                Name="plus5mButton"
+                Name="Plus5MButton"
                 Grid.Row="0"
                 Grid.Column="1"
                 Content="+ 5m"
-                Style="{StaticResource remainingTimeControlButtonStyle}"
+                Style="{StaticResource RemainingTimeControlButtonStyle}"
                 Tag="5" />
 
             <Button
-                Name="plus10mButton"
+                Name="Plus10MButton"
                 Grid.Row="1"
                 Grid.Column="1"
                 Content="+ 10m"
-                Style="{StaticResource remainingTimeControlButtonStyle}"
+                Style="{StaticResource RemainingTimeControlButtonStyle}"
                 Tag="10" />
 
             <Button
-                Name="plus30mButton"
+                Name="Plus30MButton"
                 Grid.Row="2"
                 Grid.Column="1"
                 Content="+ 30m"
-                Style="{StaticResource remainingTimeControlButtonStyle}"
+                Style="{StaticResource RemainingTimeControlButtonStyle}"
                 Tag="30" />
 
             <Button
-                Name="plus60mButton"
+                Name="Plus60MButton"
                 Grid.Row="3"
                 Grid.Column="1"
                 Content="+ 60m"
-                Style="{StaticResource remainingTimeControlButtonStyle}"
+                Style="{StaticResource RemainingTimeControlButtonStyle}"
                 Tag="60" />
 
             <Button
-                Name="plus180mButton"
+                Name="Plus180MButton"
                 Grid.Row="4"
                 Grid.Column="1"
                 Content="+ 180m"
-                Style="{StaticResource remainingTimeControlButtonStyle}"
+                Style="{StaticResource RemainingTimeControlButtonStyle}"
                 Tag="180" />
 
         </Grid>
