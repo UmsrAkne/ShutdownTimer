@@ -10,17 +10,17 @@
     public class MainWindowViewModel : BindableBase
     {
         private readonly DateTime startUpDate = DateTime.Now;
-        private DateTime timeForShutdown = DateTime.Now.AddHours(3);
-        private bool preShutdownNotified;
-        private DelegateCommand<object> changeRemainingTimeCommand;
 
         private TimeSpan baseRemainingTimeSpan = new TimeSpan(3, 0, 0);
-        private TimeSpan remainingTimeSpan = new TimeSpan(3, 0, 0);
+        private DelegateCommand<object> changeRemainingTimeCommand;
         private DateTime lastGotDateTime = DateTime.Now;
+        private bool preShutdownNotified;
+        private TimeSpan remainingTimeSpan = new TimeSpan(3, 0, 0);
+        private DateTime timeForShutdown = DateTime.Now.AddHours(3);
 
         public MainWindowViewModel()
         {
-            Timer timer = new Timer(1000);
+            var timer = new Timer(1000);
             timer.Elapsed += (_, e) =>
             {
                 RemainingTimeSpan -= DateTime.Now - lastGotDateTime;
@@ -60,7 +60,7 @@
         {
             get
             {
-                TimeSpan span = DateTime.Now - startUpDate;
+                var span = DateTime.Now - startUpDate;
                 return span.ToString(@"d\.hh\:mm\:ss");
             }
         }
@@ -72,8 +72,8 @@
         public DelegateCommand<object> ChangeRemainingTimeCommand =>
             changeRemainingTimeCommand ?? (changeRemainingTimeCommand = new DelegateCommand<object>((param) =>
             {
-                string buttonTag = (string)param;
-                int additionMinutes = int.Parse(buttonTag);
+                var buttonTag = (string)param;
+                var additionMinutes = int.Parse(buttonTag);
                 timeForShutdown = timeForShutdown.AddMinutes(additionMinutes);
                 RaisePropertyChanged(nameof(TimeForShutdown));
 
@@ -86,7 +86,9 @@
                 }
             }));
 
-        public TimeSpan RemainingTimeSpan
+        public double RemainingTimeRatio => RemainingTimeSpan.TotalSeconds / baseRemainingTimeSpan.TotalSeconds;
+
+        private TimeSpan RemainingTimeSpan
         {
             get => remainingTimeSpan;
             set
@@ -96,12 +98,10 @@
             }
         }
 
-        public double RemainingTimeRatio => RemainingTimeSpan.TotalSeconds / baseRemainingTimeSpan.TotalSeconds;
-
         private void Shutdown()
         {
             // shutdown.exe を実行するコード
-            ProcessStartInfo psi = new ProcessStartInfo
+            var psi = new ProcessStartInfo
             {
                 FileName = "shutdown.exe",
 
